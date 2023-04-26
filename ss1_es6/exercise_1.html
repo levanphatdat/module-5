@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter Name</title>
+</head>
+<body>
+<h1>Enter Name</h1>
+<input type="text" onchange="enterName()" id="name">
+<p id="result"/>
+<script>
+    function enterName() {
+        let name = document.getElementById("name").value;
+        if (!name) {
+            document.getElementById("result").innerHTML = "One for you, one for me.";
+        } else {
+            document.getElementById("result").innerHTML = `One for ${name}, one for me.`;
+        }
+    }
+</script>
+</body>
+</html>
