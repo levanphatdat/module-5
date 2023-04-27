@@ -13,10 +13,8 @@
     function sumOfMultiples() {
         let num = +document.getElementById("number").value;
         let result = 0;
-        for (let i = num + 1; i < 20; i++) {
-            if (i % num === 0) {
-                result += i;
-            }
+        for (let i = 2 * num; i < 20; i = i + num) {
+            result += i
         }
         document.getElementById("result").innerHTML = `Sum of multiples less than 20 is ${result}`;
     }
