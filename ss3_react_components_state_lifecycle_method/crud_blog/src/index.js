@@ -2,12 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import ListBlog from "./components/blog";
+import {ListPost} from "./components/post";
+import {BrowserRouter} from "react-router-dom";
+import {Route, Routes} from "react-router";
+import {CreatePost} from "./components/createPost";
+import {EditPost} from "./components/editPost";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <ListBlog/>
+        <BrowserRouter>
+            <Routes>
+                <Route path={"/"} element={<ListPost/>}/>
+                <Route path={"/create"} element={<CreatePost/>}/>
+                <Route path={"/edit/:id"} element={<EditPost/>}/>
+            </Routes>
+        </BrowserRouter>
     </React.StrictMode>
 );
 
