@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export function Header() {
     return (
@@ -28,40 +29,40 @@ export function Header() {
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav fs-5 text-light">
                                 <li className="nav-item mx-3">
-                                    <a
+                                    <Link to={'/'}
                                         className="nav-a text-light nonlink"
                                         aria-current="page"
                                         href="#"
                                     >
                                         TRANG CHỦ
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item mx-3">
-                                    <a
+                                    <Link to={'/facility'}
                                         className="nav-a text-light nonlink"
                                         aria-current="page"
                                         href="#"
                                     >
                                         DỊCH VỤ
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item mx-3">
-                                    <a
+                                    <Link to={'/customer'}
                                         className="nav-a text-light nonlink"
                                         aria-current="page"
                                         href="#"
                                     >
                                         KHÁCH HÀNG
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item mx-3">
-                                    <a
+                                    <Link to={'/contract'}
                                         className="nav-a text-light nonlink"
                                         aria-current="page"
                                         href="#"
                                     >
                                         HỢP ĐỒNG
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item mx-3">
                                     <a

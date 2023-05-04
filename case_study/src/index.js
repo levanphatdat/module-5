@@ -4,16 +4,34 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {Header} from "./components/home/header";
 import './link.css'
-import {Home} from "./components/home/home";
 import {Footer} from "./components/home/footer";
+import {Contract} from "./components/contract/contract";
+import {Route, Routes} from "react-router";
+import {BrowserRouter} from "react-router-dom";
+import {Home} from "./components/home/home";
 import {Facility} from "./components/facility/facility";
+import {Customer} from "./components/customer/customer";
+import {CreateFacility} from "./components/facility/createFacility";
+import {CreateCustomer} from "./components/customer/createCustomer";
+import {CreateContract} from "./components/contract/createContract";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Header/>
-        <Facility/>
-        <Footer/>
+        <BrowserRouter>
+            <Header/>
+            <Routes>
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/facility'} element={<Facility/>}/>
+                <Route path={'/customer'} element={<Customer/>}/>
+                <Route path={'/contract'} element={<Contract/>}/>
+                <Route path={'/facility'} element={<Facility/>}/>
+                <Route path={'/createFacility'} element={<CreateFacility/>}/>
+                <Route path={'/createCustomer'} element={<CreateCustomer/>}/>
+                <Route path={'/createContract'} element={<CreateContract/>}/>
+            </Routes>
+            <Footer/>
+        </BrowserRouter>
     </React.StrictMode>
 );
 

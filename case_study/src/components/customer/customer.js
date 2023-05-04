@@ -1,6 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {findAllCustomer, findAllCustomerType, findAllGender} from "../../service/customerService";
+import {Link} from "react-router-dom";
 
 export function Customer() {
+    const [customerList, setCustomerList] = useState([]);
+    const [genderList, setGenderList] = useState([]);
+    const [customerTypeList, setCustomerTypeList] = useState([]);
+    useEffect(() => {
+        const listCustomer = async () => {
+            setCustomerList(await findAllCustomer());
+            setGenderList(await findAllGender());
+            setCustomerTypeList(await findAllCustomerType());
+        }
+        listCustomer();
+    }, [])
     return (
         <div>
             <div className="container-fluid">
@@ -8,9 +21,9 @@ export function Customer() {
                     Danh sách khách hàng
                 </h1>
                 <div>
-                    <button type="button" className="btn btn-success my-3">
+                    <Link to={'/createCustomer'} className="btn btn-success my-3">
                         Thêm mới khách hàng
-                    </button>
+                    </Link>
                 </div>
                 <table className="table table-success">
                     <thead>
@@ -29,58 +42,45 @@ export function Customer() {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Lê Đạt</td>
-                        <td>01/12/2000</td>
-                        <td>Nam</td>
-                        <td>1919563562</td>
-                        <td>0975362222</td>
-                        <td>datcute@gmail.com</td>
-                        <td>Gold</td>
-                        <td>Huế</td>
-                        <td>
-                            <button type="submit" className="btn btn-primary">
-                                Sửa
-                            </button>
-                        </td>
-                        <td>
-                            <button
-                                type="button"
-                                className="btn btn-danger float-end"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                            >
-                                Xoá
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Lê Đồng</td>
-                        <td>01/02/1998</td>
-                        <td>Nam</td>
-                        <td>1919525252</td>
-                        <td>0963564444</td>
-                        <td>dongle12@gmail.com</td>
-                        <td>Silver</td>
-                        <td>Huế</td>
-                        <td>
-                            <button type="submit" className="btn btn-primary">
-                                Sửa
-                            </button>
-                        </td>
-                        <td>
-                            <button
-                                type="button"
-                                className="btn btn-danger float-end"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                            >
-                                Xoá
-                            </button>
-                        </td>
-                    </tr>
+                    {
+                        customerList.map((customer, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{customer.name}</td>
+                                <td>{customer.dateOfBirth}</td>
+                                <td>
+                                    {
+                                        genderList.find(gender => customer.gender === gender.id)?.gender
+                                    }
+                                </td>
+                                <td>{customer.passport}</td>
+                                <td>{customer.phoneNumber}</td>
+                                <td>{customer.email}</td>
+                                <td>
+                                    {
+                                        customerTypeList.find(customerType => customer.customerType === customerType.id)?.customerType
+                                    }
+                                </td>
+                                <td>{customer.address}</td>
+                                <td>
+                                    <button type="submit" className="btn btn-primary">
+                                        Sửa
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger float-end"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                    >
+                                        Xoá
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example">

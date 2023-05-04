@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export function CreateFacility() {
     return (
         <div className="row">
@@ -82,9 +84,9 @@ export function CreateFacility() {
                         </label>
                         <input type="text" className="form-control"/>
                     </div>
-                    <button type="submit" className="btn btn-danger ms-3 float-end">
+                    <Link to={'/facility'} type="submit" className="btn btn-danger ms-3 float-end">
                         Huỷ
-                    </button>
+                    </Link>
                     <button type="submit" className="btn btn-primary float-end">
                         Thêm mới
                     </button>
