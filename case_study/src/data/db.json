@@ -32,6 +32,39 @@
       "email": "lanhcute@gmail.com",
       "customerType": 3,
       "address": "Quảng Nam"
+    },
+    {
+      "id": 4,
+      "name": "Thắng Ngôn",
+      "dateOfBirth": "2023-05-25",
+      "gender": 2,
+      "passport": "123123123",
+      "phoneNumber": "0911231233",
+      "email": "dat@gmail.com",
+      "customerType": 2,
+      "address": "phong dien"
+    },
+    {
+      "id": 5,
+      "name": "adss",
+      "dateOfBirth": "2023-05-17",
+      "gender": 2,
+      "passport": "123123123",
+      "phoneNumber": "0911231231",
+      "email": "adw@gmail.com",
+      "customerType": 2,
+      "address": "123"
+    },
+    {
+      "name": "Chú Đồng",
+      "dateOfBirth": "1997-12-22",
+      "gender": 3,
+      "passport": "123123123",
+      "phoneNumber": "0911231231",
+      "email": "dongcute@gmail.com",
+      "customerType": 3,
+      "address": "QT",
+      "id": 6
     }
   ],
   "genders": [

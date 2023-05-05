@@ -8,7 +8,7 @@ export function EditFacility() {
                 <div
                     className="col-6"
                     style={{
-                        background: "#afa354",
+                        background: "#85c4c4",
                         margin: "80px 70px 30px",
                         padding: "25px 25px"
                     }}

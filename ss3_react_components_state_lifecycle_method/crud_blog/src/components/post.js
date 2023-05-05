@@ -38,7 +38,7 @@ export function ListPost() {
                     posts.map((post, index) => (
                         <tr key={index}>
                             <td>{post.id}</td>
-                            <td>{post.title}</td>
+                            <td><Link to={`/detail/${post.id}`} className={"deleteLink"}>{post.title}</Link></td>
                             <td>{post.category}</td>
                             <td>{post.updatedAt}</td>
                             <td>

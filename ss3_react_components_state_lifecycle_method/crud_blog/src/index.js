@@ -7,6 +7,8 @@ import {BrowserRouter} from "react-router-dom";
 import {Route, Routes} from "react-router";
 import {CreatePost} from "./components/createPost";
 import {EditPost} from "./components/editPost";
+import {PostDetail} from "./components/postDetail";
+import {ToastContainer} from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,8 +18,10 @@ root.render(
                 <Route path={"/"} element={<ListPost/>}/>
                 <Route path={"/create"} element={<CreatePost/>}/>
                 <Route path={"/edit/:id"} element={<EditPost/>}/>
+                <Route path={"/detail/:id"} element={<PostDetail/>}/>
             </Routes>
         </BrowserRouter>
+        <ToastContainer/>
     </React.StrictMode>
 );
 

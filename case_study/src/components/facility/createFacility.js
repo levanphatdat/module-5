@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import React from "react";
 
 export function CreateFacility() {
     return (
@@ -7,16 +8,40 @@ export function CreateFacility() {
             <div
                 className="col-6"
                 style={{
-                    background: "#afa354",
+                    background: "#85c4c4",
                     margin: "80px 70px 30px",
                     padding: "25px 25px"
                 }}
             >
                 <h1 className="d-flex justify-content-center">Thêm mới dịch vụ</h1>
+                {/*<Formik*/}
+                {/*    initialValues={{*/}
+                {/*        name:'',*/}
+                {/*        img:'',*/}
+                {/*        typeRoom: 1,*/}
+                {/*        area:'',*/}
+                {/*        price:'',*/}
+                {/*        amountOfPeople:'',*/}
+                {/*        rentalType:1,*/}
+                {/*        roomStandard:'',*/}
+                {/*        description:'',*/}
+                {/*        poolArea:'',*/}
+                {/*        floor:'',*/}
+                {/*        freeService:[],*/}
+                {/*        accompaniedService:[]*/}
+                {/*    }}*/}
+                {/*     validationSchema={}*/}
+                {/*>*/}
                 <form>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
                             Tên dịch vụ
+                        </label>
+                        <input type="text" className="form-control" id="exampleInputEmail1"/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
+                            Hình ảnh
                         </label>
                         <input type="text" className="form-control" id="exampleInputEmail1"/>
                     </div>
@@ -91,6 +116,7 @@ export function CreateFacility() {
                         Thêm mới
                     </button>
                 </form>
+                {/*</Formik>*/}
             </div>
             <div className="col-3"/>
         </div>
