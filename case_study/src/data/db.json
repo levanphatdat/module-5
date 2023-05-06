@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Lê Đạt",
-      "dateOfBirth": "23/12/1999",
+      "dateOfBirth": "2023-05-25",
       "gender": 1,
       "passport": "191912345",
       "phoneNumber": "0971412124",
@@ -14,7 +14,7 @@
     {
       "id": 2,
       "name": "Đại Đồng",
-      "dateOfBirth": "03/03/1997",
+      "dateOfBirth": "2023-05-25",
       "gender": 1,
       "passport": "191912369",
       "phoneNumber": "0936561111",
@@ -25,7 +25,7 @@
     {
       "id": 3,
       "name": "Nguyễn Minh Lãnh",
-      "dateOfBirth": "20/01/1993",
+      "dateOfBirth": "2023-05-25",
       "gender": 1,
       "passport": "191919191",
       "phoneNumber": "0963333584",
@@ -41,7 +41,7 @@
       "passport": "123123123",
       "phoneNumber": "0911231233",
       "email": "dat@gmail.com",
-      "customerType": 2,
+      "customerType": 4,
       "address": "phong dien"
     },
     {

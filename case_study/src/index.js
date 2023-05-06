@@ -15,6 +15,7 @@ import {CreateFacility} from "./components/facility/createFacility";
 import {CreateCustomer} from "./components/customer/createCustomer";
 import {CreateContract} from "./components/contract/createContract";
 import {EditCustomer} from "./components/customer/editCustomer";
+import {EditFacility} from "./components/facility/editFacility";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,7 +31,8 @@ root.render(
                 <Route path={'/createFacility'} element={<CreateFacility/>}/>
                 <Route path={'/createCustomer'} element={<CreateCustomer/>}/>
                 <Route path={'/createContract'} element={<CreateContract/>}/>
-                <Route path={'/edit/:id'} element={<EditCustomer/>}/>
+                <Route path={'/editCustomer/:id'} element={<EditCustomer/>}/>
+                <Route path={'/editFacility/:id'} element={<EditFacility/>}/>
             </Routes>
             <Footer/>
         </BrowserRouter>

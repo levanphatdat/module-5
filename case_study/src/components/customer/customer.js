@@ -63,7 +63,7 @@ export function Customer() {
                                 </td>
                                 <td>{customer.address}</td>
                                 <td>
-                                    <Link to={`/edit/${customer.id}`} className="btn btn-primary">
+                                    <Link to={`/editCustomer/${customer.id}`} className="btn btn-primary">
                                         Sửa
                                     </Link>
                                 </td>

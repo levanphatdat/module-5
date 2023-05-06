@@ -47,7 +47,9 @@ export function Facility() {
                                             >
                                                 Xoá
                                             </button>
-                                            <button className="btn btn-primary float-end mx-3">Sửa</button>
+                                            <Link to={`/editFacility/${facility.id}`} className="btn btn-primary float-end mx-3">
+                                                Sửa
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

@@ -38,7 +38,7 @@ export function CreateCustomer() {
                     }}
                     validationSchema={Yup.object({
                         name: Yup.string().required("Không được để trống")
-                            .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, "Tên dịch vụ không được chứa số và các kí tự đầu tiên của mỗi từ phải viết hoa."),
+                            .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, "Tên khách hàng không được chứa số và các kí tự đầu tiên của mỗi từ phải viết hoa."),
                         passport: Yup.string()
                             .required("Không được để trống")
                             .matches(
@@ -61,17 +61,17 @@ export function CreateCustomer() {
 
                     })}
                     onSubmit={(customer) => {
-                        const create = async () => {
-                            await createCustomer({
-                                ...customer,
-                                gender: parseInt(customer.gender),
-                                customerType: parseInt(customer.customerType)
-                            });
-                            alert("Thêm mới khách hàng thành công !!!");
-                            navigate("/customer")
-                        }
-                        create();
-                    }}
+                    const create = async () => {
+                        await createCustomer({
+                            ...customer,
+                            gender: parseInt(customer.gender),
+                            customerType: parseInt(customer.customerType)
+                        });
+                        alert("Thêm mới khách hàng thành công !!!");
+                        navigate("/customer")
+                    }
+                    create();
+                }}
                 >
                     <Form>
                         <div className="mb-3">
