@@ -1,7 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import * as Yup from 'yup';
-import {ErrorMessage, Field, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import {
     createFacility,
     findAllAccompaniedService,
@@ -15,10 +15,7 @@ export function CreateFacility() {
     const [rentalTypes, setRentalTypes] = useState([]);
     const [typeRooms, setTypeRooms] = useState([]);
     const [accompaniedServices, setAccompaniedServices] = useState([])
-    const [selectTypeRoom, setSelectTypeRoom] = useState("");
-    const handleSelect = (event) => {
-        setSelectTypeRoom(event.target.value.toString());
-    };
+    const [selectTypeRoom, setSelectTypeRoom] = useState("1");
     useEffect(() => {
             const list = async () => {
                 setRentalTypes(await findAllRentalType());
@@ -44,17 +41,18 @@ export function CreateFacility() {
                     initialValues={{
                         name: '',
                         img: '',
-                        typeRoom: 1,
+                        typeRoom: '',
                         area: '',
                         price: '',
                         amountOfPeople: '',
                         rentalType: 1,
-                        roomStandard: null,
-                        description: null,
-                        poolArea: null,
-                        floor: null,
-                        freeService: null,
+                        roomStandard: '',
+                        description: '',
+                        poolArea: '',
+                        floor: '',
+                        freeService: '',
                         accompaniedService: []
+
                     }}
                     validationSchema={
                         Yup.object({
@@ -62,15 +60,15 @@ export function CreateFacility() {
                                 .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, "Tên dịch vụ không được chứa số."),
                             img: Yup.string().required("Không được để trống"),
                             area: Yup.string().required("Không được để trống"),
-                            price: Yup.string().required("Không được để trống"),
+                            // price: Yup.string().required("Không được để trống"),
                             amountOfPeople: Yup.string().required("Không được để trống")
                                 .matches(/^[1-9][\d]*$/, "Số lượng người phải là số nguyên dương."),
-                            roomStandard: Yup.string().required("Không được để trống"),
-                            description: Yup.string().required("Không được để trống"),
-                            poolArea: Yup.string().required("Không được để trống")
-                                .matches(/^[1-9][\d]*$/, "Diện tích hồ bơi phải là số nguyên dương."),
-                            floor: Yup.string().required("Không được để trống")
-                                .matches(/^[1-9][\d]*$/, "Số tầng phải là số nguyên dương."),
+                            // roomStandard: Yup.string().required("Không được để trống"),
+                            // description: Yup.string().required("Không được để trống"),
+                            // poolArea: Yup.string().required("Không được để trống")
+                            //     .matches(/^[1-9][\d]*$/, "Diện tích hồ bơi phải là số nguyên dương."),
+                            // floor: Yup.string().required("Không được để trống")
+                            //     .matches(/^[1-9][\d]*$/, "Số tầng phải là số nguyên dương.")
                         })
                     }
                     onSubmit={(facility) => {
@@ -78,16 +76,18 @@ export function CreateFacility() {
                             await createFacility({
                                 ...facility,
                                 rentalType: parseInt(facility.rentalType),
-                                typeRoom: parseInt(facility.typeRoom)
-                            });
+                                typeRoom: parseInt(selectTypeRoom),
+                                accompaniedService: facility.accompaniedService.map(accompaniedService => parseInt(accompaniedService))
+                            })
                             console.log(facility)
+                            console.log(selectTypeRoom)
                             alert("Thêm dịch vụ hàng thành công !!!");
                             navigate("/facility")
                         }
                         create();
                     }}
                 >
-                    <form>
+                    <Form>
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label fw-bold">
                                 Tên dịch vụ
@@ -179,21 +179,23 @@ export function CreateFacility() {
                                 Loại dịch vụ
                             </label>
                             <Field
-                                as={"select"}
-                                name={"typeRoom"}
-                                className="form-select"
-                                aria-label="Default select example"
-                                onChange={handleSelect}
-                            >
-                                {
-                                    typeRooms.map((typeRoom, index) => (
-                                        <option key={index} value={typeRoom.id}>
-                                            {typeRoom.typeRoom}
-                                        </option>
-                                    ))
-                                }
-
-                            </Field>
+                                name="typeRoom"
+                                render={() => (
+                                    <select
+                                        onChange={(event)=> (setSelectTypeRoom(event.target.value))}
+                                        className="form-select"
+                                        aria-label="Default select example"
+                                    >
+                                        {
+                                            typeRooms.map((typeRoom, index) => (
+                                                <option key={index} value={typeRoom.id}>
+                                                    {typeRoom.typeRoom}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
+                                )}
+                            />
                             <ErrorMessage
                                 name="typeRoom"
                                 component="span"
@@ -201,13 +203,14 @@ export function CreateFacility() {
                             />
                         </div>
                         {
-                            selectTypeRoom === '1' && (
+                            selectTypeRoom === "1" && (
                                 <div>
                                     <div className="mb-3">
                                         <label htmlFor="roomStandard" className="form-label fw-bold">
                                             Tiêu chuẩn phòng
                                         </label>
-                                        <Field type="text" name={"roomStandard"} id={"roomStandard"} className="form-control"/>
+                                        <Field type="text" name={"roomStandard"} id={"roomStandard"}
+                                               className="form-control"/>
                                         <ErrorMessage
                                             name="roomStandard"
                                             component="span"
@@ -218,7 +221,8 @@ export function CreateFacility() {
                                         <label htmlFor="description" className="form-label fw-bold">
                                             Mô tả tiện nghi khác
                                         </label>
-                                        <Field type="text" name={"description"} id={"description"} className="form-control"/>
+                                        <Field type="text" name={"description"} id={"description"}
+                                               className="form-control"/>
                                         <ErrorMessage
                                             name="description"
                                             component="span"
@@ -252,13 +256,14 @@ export function CreateFacility() {
                             )
                         }
                         {
-                            selectTypeRoom === '2' && (
+                            selectTypeRoom === "2" && (
                                 <div>
                                     <div className="mb-3">
                                         <label htmlFor="roomStandard" className="form-label fw-bold">
                                             Tiêu chuẩn phòng
                                         </label>
-                                        <Field type="text" name={"roomStandard"} id={"roomStandard"} className="form-control"/>
+                                        <Field type="text" name={"roomStandard"} id={"roomStandard"}
+                                               className="form-control"/>
                                         <ErrorMessage
                                             name="roomStandard"
                                             component="span"
@@ -269,7 +274,8 @@ export function CreateFacility() {
                                         <label htmlFor="description" className="form-label fw-bold">
                                             Mô tả tiện nghi khác
                                         </label>
-                                        <Field type="text" name={"description"} id={"description"} className="form-control"/>
+                                        <Field type="text" name={"description"} id={"description"}
+                                               className="form-control"/>
                                         <ErrorMessage
                                             name="description"
                                             component="span"
@@ -292,13 +298,14 @@ export function CreateFacility() {
                             )
                         }
                         {
-                            selectTypeRoom ==="3" && (
+                            selectTypeRoom === "3" && (
                                 <div>
                                     <div className="mb-3">
                                         <label htmlFor="freeService" className="form-label fw-bold">
                                             Dịch vụ miễn phí đi kèm
                                         </label>
-                                        <Field type="text" name={"freeService"} id={"freeService"} className="form-control"/>
+                                        <Field type="text" name={"freeService"} id={"freeService"}
+                                               className="form-control"/>
                                         <ErrorMessage
                                             name="freeService"
                                             component="span"
@@ -320,13 +327,14 @@ export function CreateFacility() {
                                     {accompaniedServices.map((accompanied, index) => (
                                         <div className="row" key={index}>
                                             <Field
+                                                className={"mb-1"}
                                                 style={{width: "5%", marginBottom: "0"}}
                                                 type="checkbox"
-                                                id={accompanied.id}
                                                 name="accompaniedService"
-                                                value={accompanied.id}
+                                                id={accompanied.id}
+                                                value={accompanied.id.toString()}
                                             />
-                                            <label className="col-10 mt-1">
+                                            <label className="col-10 mb-1" htmlFor={accompanied.id}>
                                                 {accompanied.accompaniedService}
                                             </label>
                                         </div>
@@ -340,7 +348,7 @@ export function CreateFacility() {
                         <button type="submit" className="btn btn-primary float-end">
                             Thêm mới
                         </button>
-                    </form>
+                    </Form>
                 </Formik>
             </div>
             <div className="col-3"/>

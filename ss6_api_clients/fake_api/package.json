@@ -1,5 +1,5 @@
 {
-  "name": "case_study",
+  "name": "fake_api",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,12 +9,12 @@
     "axios": "^1.4.0",
     "formik": "^2.2.9",
     "json-server": "^0.17.3",
-    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.11.1",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
+    "slugify": "^1.6.6",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1"
   },
@@ -22,8 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "json-server": "json-server -p 8080 --watch src/data/db.json"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

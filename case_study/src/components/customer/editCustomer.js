@@ -4,6 +4,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {editCustomer, findAllCustomerType, findAllGender, findCustomerById} from "../../service/customerService";
 import {Link} from "react-router-dom";
+import moment from "moment";
 
 export function EditCustomer() {
     const navigate = useNavigate();
@@ -79,6 +80,7 @@ export function EditCustomer() {
                         const edit = async () => {
                             await editCustomer({
                                 ...customer,
+                                dateOfBirth: moment(customer.dateOfBirth).format('DD-MM-YYYY'),
                                 gender: parseInt(customer.gender),
                                 customerType: parseInt(customer.customerType)
                             });

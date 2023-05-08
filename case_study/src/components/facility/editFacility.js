@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router";
-import {findCustomerById} from "../../service/customerService";
 import {
-    createFacility, editFacility,
+    editFacility,
     findAllAccompaniedService,
     findAllRentalType,
     findAllTypeRoom,
     findFacilityById
 } from "../../service/facilityService";
-import {ErrorMessage, Field, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {Link} from "react-router-dom";
 
@@ -18,11 +17,8 @@ export function EditFacility() {
     const [rentalTypes, setRentalTypes] = useState([]);
     const [typeRooms, setTypeRooms] = useState([]);
     const [accompaniedServices, setAccompaniedServices] = useState([])
-    const [selectTypeRoom, setSelectTypeRoom] = useState("");
+    const [selectTypeRoom, setSelectTypeRoom] = useState(facilityData?.typeRoom);
     const param = useParams();
-    const handleSelect = (event) => {
-        setSelectTypeRoom(event.target.value.toString());
-    };
     useEffect(() => {
         const data = async () => {
             setFacilityData(await findFacilityById(param.id));
@@ -36,6 +32,7 @@ export function EditFacility() {
                 setAccompaniedServices(await findAllAccompaniedService());
             };
             list();
+            console.log(facilityData?.typeRoom.toString())
         }, []
     )
     if (!facilityData) {
@@ -56,7 +53,8 @@ export function EditFacility() {
                     <h1 className="d-flex justify-content-center">Sửa thông tin dịch vụ</h1>
                     <Formik
                         initialValues={{
-                            name: facilityData?.id,
+                            id: facilityData?.id,
+                            name: facilityData?.name,
                             img: facilityData?.img,
                             typeRoom: facilityData?.typeRoom,
                             area: facilityData?.area,
@@ -76,15 +74,15 @@ export function EditFacility() {
                                     .matches(/^([a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/, "Tên dịch vụ không được chứa số."),
                                 img: Yup.string().required("Không được để trống"),
                                 area: Yup.string().required("Không được để trống"),
-                                price: Yup.string().required("Không được để trống"),
+                                // price: Yup.string().required("Không được để trống"),
                                 amountOfPeople: Yup.string().required("Không được để trống")
                                     .matches(/^[1-9][\d]*$/, "Số lượng người phải là số nguyên dương."),
-                                roomStandard: Yup.string().required("Không được để trống"),
-                                description: Yup.string().required("Không được để trống"),
-                                poolArea: Yup.string().required("Không được để trống")
-                                    .matches(/^[1-9][\d]*$/, "Diện tích hồ bơi phải là số nguyên dương."),
-                                floor: Yup.string().required("Không được để trống")
-                                    .matches(/^[1-9][\d]*$/, "Số tầng phải là số nguyên dương."),
+                                // roomStandard: Yup.string().required("Không được để trống"),
+                                // description: Yup.string().required("Không được để trống"),
+                                // poolArea: Yup.string().required("Không được để trống")
+                                //     .matches(/^[1-9][\d]*$/, "Diện tích hồ bơi phải là số nguyên dương."),
+                                // floor: Yup.string().required("Không được để trống")
+                                //     .matches(/^[1-9][\d]*$/, "Số tầng phải là số nguyên dương.")
                             })
                         }
                         onSubmit={(facility) => {
@@ -92,16 +90,16 @@ export function EditFacility() {
                                 await editFacility({
                                     ...facility,
                                     rentalType: parseInt(facility.rentalType),
-                                    typeRoom: parseInt(facility.typeRoom)
+                                    typeRoom: parseInt(selectTypeRoom),
+                                    accompaniedService: facility.accompaniedService.map(accompaniedService => parseInt(accompaniedService))
                                 });
-                                console.log(facility)
                                 alert("Sửa thông tin dịch vụ thành công !!!");
                                 navigate("/facility")
                             }
                             edit();
                         }}
                     >
-                        <form>
+                        <Form>
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label fw-bold">
                                     Tên dịch vụ
@@ -193,21 +191,23 @@ export function EditFacility() {
                                     Loại dịch vụ
                                 </label>
                                 <Field
-                                    as={"select"}
-                                    name={"typeRoom"}
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    onChange={handleSelect}
-                                >
-                                    {
-                                        typeRooms.map((typeRoom, index) => (
-                                            <option key={index} value={typeRoom.id}>
-                                                {typeRoom.typeRoom}
-                                            </option>
-                                        ))
-                                    }
-
-                                </Field>
+                                    name="typeRoom"
+                                    render={() => (
+                                        <select
+                                            onChange={(event) => (setSelectTypeRoom(event.target.value))}
+                                            className="form-select"
+                                            aria-label="Default select example"
+                                        >
+                                            {
+                                                typeRooms.map((typeRoom, index) => (
+                                                    <option key={index} value={typeRoom.id}>
+                                                        {typeRoom.typeRoom}
+                                                    </option>
+                                                ))
+                                            }
+                                        </select>
+                                    )}
+                                />
                                 <ErrorMessage
                                     name="typeRoom"
                                     component="span"
@@ -215,13 +215,14 @@ export function EditFacility() {
                                 />
                             </div>
                             {
-                                selectTypeRoom === '1' && (
+                                selectTypeRoom === "1" && (
                                     <div>
                                         <div className="mb-3">
                                             <label htmlFor="roomStandard" className="form-label fw-bold">
                                                 Tiêu chuẩn phòng
                                             </label>
-                                            <Field type="text" name={"roomStandard"} id={"roomStandard"} className="form-control"/>
+                                            <Field type="text" name={"roomStandard"} id={"roomStandard"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="roomStandard"
                                                 component="span"
@@ -232,7 +233,8 @@ export function EditFacility() {
                                             <label htmlFor="description" className="form-label fw-bold">
                                                 Mô tả tiện nghi khác
                                             </label>
-                                            <Field type="text" name={"description"} id={"description"} className="form-control"/>
+                                            <Field type="text" name={"description"} id={"description"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="description"
                                                 component="span"
@@ -243,7 +245,8 @@ export function EditFacility() {
                                             <label htmlFor="poolArea" className="form-label fw-bold">
                                                 Diện tích hồ bơi
                                             </label>
-                                            <Field type="text" name={"poolArea"} id={"poolArea"} className="form-control"/>
+                                            <Field type="text" name={"poolArea"} id={"poolArea"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="poolArea"
                                                 component="span"
@@ -266,13 +269,14 @@ export function EditFacility() {
                                 )
                             }
                             {
-                                selectTypeRoom === '2' && (
+                                selectTypeRoom === "2" && (
                                     <div>
                                         <div className="mb-3">
                                             <label htmlFor="roomStandard" className="form-label fw-bold">
                                                 Tiêu chuẩn phòng
                                             </label>
-                                            <Field type="text" name={"roomStandard"} id={"roomStandard"} className="form-control"/>
+                                            <Field type="text" name={"roomStandard"} id={"roomStandard"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="roomStandard"
                                                 component="span"
@@ -283,7 +287,8 @@ export function EditFacility() {
                                             <label htmlFor="description" className="form-label fw-bold">
                                                 Mô tả tiện nghi khác
                                             </label>
-                                            <Field type="text" name={"description"} id={"description"} className="form-control"/>
+                                            <Field type="text" name={"description"} id={"description"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="description"
                                                 component="span"
@@ -306,13 +311,14 @@ export function EditFacility() {
                                 )
                             }
                             {
-                                selectTypeRoom ==="3" && (
+                                selectTypeRoom === "3" && (
                                     <div>
                                         <div className="mb-3">
                                             <label htmlFor="freeService" className="form-label fw-bold">
                                                 Dịch vụ miễn phí đi kèm
                                             </label>
-                                            <Field type="text" name={"freeService"} id={"freeService"} className="form-control"/>
+                                            <Field type="text" name={"freeService"} id={"freeService"}
+                                                   className="form-control"/>
                                             <ErrorMessage
                                                 name="freeService"
                                                 component="span"
@@ -334,13 +340,14 @@ export function EditFacility() {
                                         {accompaniedServices.map((accompanied, index) => (
                                             <div className="row" key={index}>
                                                 <Field
+                                                    className={"mb-1"}
                                                     style={{width: "5%", marginBottom: "0"}}
                                                     type="checkbox"
-                                                    id={accompanied.id}
                                                     name="accompaniedService"
+                                                    id={accompanied.id}
                                                     value={accompanied.id}
                                                 />
-                                                <label className="col-10 mt-1">
+                                                <label className="col-10 mb-1" htmlFor={accompanied.id}>
                                                     {accompanied.accompaniedService}
                                                 </label>
                                             </div>
@@ -354,7 +361,7 @@ export function EditFacility() {
                             <button type="submit" className="btn btn-primary float-end">
                                 Xác nhận
                             </button>
-                        </form>
+                        </Form>
                     </Formik>
                 </div>
                 <div className="col-3"/>

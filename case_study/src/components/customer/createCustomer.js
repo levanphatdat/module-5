@@ -3,6 +3,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import React, {useEffect, useState} from "react";
 import * as Yup from 'yup';
 import {createCustomer, findAllCustomerType} from "../../service/customerService";
+import moment from "moment";
 
 export function CreateCustomer() {
     const navigate = useNavigate();
@@ -64,6 +65,7 @@ export function CreateCustomer() {
                     const create = async () => {
                         await createCustomer({
                             ...customer,
+                            dateOfBirth: moment(customer.dateOfBirth).format('DD-MM-YYYY'),
                             gender: parseInt(customer.gender),
                             customerType: parseInt(customer.customerType)
                         });

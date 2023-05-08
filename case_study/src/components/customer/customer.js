@@ -1,11 +1,27 @@
 import React, {useEffect, useState} from "react";
-import {findAllCustomer, findAllCustomerType, findAllGender} from "../../service/customerService";
+import {
+    deleteCustomer,
+    findAllCustomer,
+    findAllCustomerType,
+    findAllGender,
+    getCustomer
+} from "../../service/customerService";
 import {Link} from "react-router-dom";
 
 export function Customer() {
     const [customerList, setCustomerList] = useState([]);
     const [genderList, setGenderList] = useState([]);
     const [customerTypeList, setCustomerTypeList] = useState([]);
+    const [customerDetail, setCustomerDetail] = useState();
+    const getData = async (id) => {
+        const data = await getCustomer(id);
+        setCustomerDetail(data);
+    };
+    const handleDelete = async () => {
+        await deleteCustomer(customerDetail.id);
+        setCustomerList(await findAllCustomer())
+        alert("Xoá thông tin khách hàng thành công");
+    };
     useEffect(() => {
         const listCustomer = async () => {
             setCustomerList(await findAllCustomer());
@@ -73,6 +89,7 @@ export function Customer() {
                                         className="btn btn-danger float-end"
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
+                                        onClick={() => getData(customer.id)}
                                     >
                                         Xoá
                                     </button>
@@ -86,29 +103,29 @@ export function Customer() {
                 <nav aria-label="Page navigation example">
                     <ul className="pagination justify-content-center">
                         <li className="page-item">
-                            <a className="page-link" href="#">
+                            <button className="page-link">
                                 Previous
-                            </a>
+                            </button>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#">
+                            <button className="page-link">
                                 1
-                            </a>
+                            </button>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#">
+                            <button className="page-link">
                                 2
-                            </a>
+                            </button>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#">
+                            <button className="page-link">
                                 3
-                            </a>
+                            </button>
                         </li>
                         <li className="page-item">
-                            <a className="page-link" href="#">
+                            <button className="page-link">
                                 Next
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </nav>
@@ -124,7 +141,7 @@ export function Customer() {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">
-                                    Xoá dịch vụ
+                                    Delete
                                 </h5>
                                 <button
                                     type="button"
@@ -133,7 +150,10 @@ export function Customer() {
                                     aria-label="Close"
                                 />
                             </div>
-                            <div className="modal-body">Bạn muốn xoá chứ?</div>
+                            <div className="modal-body">
+                                Bạn có muốn xoá{" "}
+                                <span className={"text-danger"}>{customerDetail?.name}</span>?
+                            </div>
                             <div className="modal-footer">
                                 <button
                                     type="button"
@@ -142,7 +162,12 @@ export function Customer() {
                                 >
                                     Huỷ
                                 </button>
-                                <button type="button" className="btn btn-danger">
+                                <button
+                                    data-bs-dismiss="modal"
+                                    type="button"
+                                    onClick={() => handleDelete()}
+                                    className="btn btn-primary"
+                                >
                                     Xác nhận
                                 </button>
                             </div>

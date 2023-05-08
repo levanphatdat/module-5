@@ -1,15 +1,26 @@
 import React, {useEffect, useState} from "react";
-import {findAllFacility} from "../../service/facilityService";
+import {deleteFacility, findAllFacility, getFacility} from "../../service/facilityService";
 import {Link} from "react-router-dom";
 
 export function Facility() {
     const [facilityList, setFacilityList] = useState([]);
+    const [facilityDetail, setFacilityDetail] = useState();
+
     useEffect(() => {
         const listFacility = async () => {
             setFacilityList(await findAllFacility())
         }
         listFacility()
     }, [])
+    const getData = async (id) => {
+        const data = await getFacility(id);
+        setFacilityDetail(data);
+    };
+    const handleDelete = async () => {
+        await deleteFacility(facilityDetail.id);
+        setFacilityList(await findAllFacility())
+        alert("Xoá thông tin dịch vụ thành công");
+    };
     return (
         <div>
             <>
@@ -33,7 +44,7 @@ export function Facility() {
                             facilityList.map((facility, index) => (
                                 <div key={index} className="col-4 mb-5">
                                     <div className="card" style={{width: "95%"}}>
-                                        <img src={facility.img}/>
+                                        <img src={facility.img} alt=""/>
                                         <div className="card-body">
                                             <h5 className="card-title">{facility.name}</h5>
                                             <p>
@@ -44,6 +55,7 @@ export function Facility() {
                                                 className="btn btn-danger float-end"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
+                                                onClick={() => getData(facility.id)}
                                             >
                                                 Xoá
                                             </button>
@@ -59,29 +71,29 @@ export function Facility() {
                     <nav aria-label="Page navigation example">
                         <ul className="pagination justify-content-center">
                             <li className="page-item">
-                                <a className="page-link" href="#">
+                                <button className="page-link" >
                                     Previous
-                                </a>
+                                </button>
                             </li>
                             <li className="page-item">
-                                <a className="page-link" href="#">
+                                <button className="page-link">
                                     1
-                                </a>
+                                </button>
                             </li>
                             <li className="page-item">
-                                <a className="page-link" href="#">
+                                <button className="page-link" >
                                     2
-                                </a>
+                                </button>
                             </li>
                             <li className="page-item">
-                                <a className="page-link" href="#">
+                                <button className="page-link" >
                                     3
-                                </a>
+                                </button>
                             </li>
                             <li className="page-item">
-                                <a className="page-link" href="#">
+                                <button className="page-link">
                                     Next
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </nav>
@@ -98,7 +110,7 @@ export function Facility() {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">
-                                    Xoá dịch vụ
+                                    Delete
                                 </h5>
                                 <button
                                     type="button"
@@ -107,7 +119,10 @@ export function Facility() {
                                     aria-label="Close"
                                 />
                             </div>
-                            <div className="modal-body">Bạn muốn xoá chứ?</div>
+                            <div className="modal-body">
+                                Bạn có muốn xoá{" "}
+                                <span className={"text-danger"}>{facilityDetail?.name}</span>?
+                            </div>
                             <div className="modal-footer">
                                 <button
                                     type="button"
@@ -116,7 +131,12 @@ export function Facility() {
                                 >
                                     Huỷ
                                 </button>
-                                <button type="button" className="btn btn-danger">
+                                <button
+                                    data-bs-dismiss="modal"
+                                    type="button"
+                                    onClick={() => handleDelete()}
+                                    className="btn btn-primary"
+                                >
                                     Xác nhận
                                 </button>
                             </div>

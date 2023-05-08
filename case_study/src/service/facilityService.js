@@ -34,24 +34,21 @@ export const findAllAccompaniedService = async () => {
 }
 export const createFacility = async (facility) => {
     try {
-        const result = await axios.post(`http://localhost:8080/facilities`, {...facility})
-        return result.data;
+        await axios.post(`http://localhost:8080/facilities`, {...facility})
     } catch (error) {
         console.log(error)
     }
 }
 export const editFacility = async (facility) => {
     try {
-        const result = await axios.put(`http://localhost:8080/facilities/${facility.id}`, {...facility})
-        return result.data;
+        await axios.put(`http://localhost:8080/facilities/${facility.id}`, {...facility})
     } catch (error) {
         console.log(error)
     }
 }
 export const deleteFacility = async (id) => {
     try {
-        const result = await axios.delete(`http://localhost:8080/facilities/${id}`)
-        return result.data;
+        await axios.delete(`http://localhost:8080/facilities/${id}`)
     } catch (error) {
         console.log(error)
     }
@@ -64,4 +61,12 @@ export const findFacilityById = async (id) => {
         console.log(error)
     }
 }
+export const getFacility = async (id) => {
+    try {
+        const result = await axios.get(`http://localhost:8080/facilities/${id}`);
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
