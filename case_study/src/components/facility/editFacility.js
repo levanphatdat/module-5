@@ -17,8 +17,9 @@ export function EditFacility() {
     const [rentalTypes, setRentalTypes] = useState([]);
     const [typeRooms, setTypeRooms] = useState([]);
     const [accompaniedServices, setAccompaniedServices] = useState([])
-    const [selectTypeRoom, setSelectTypeRoom] = useState(facilityData?.typeRoom);
     const param = useParams();
+    const [selectTypeRoom, setSelectTypeRoom] = useState(facilityData?.typeRoom.toString());
+
     useEffect(() => {
         const data = async () => {
             setFacilityData(await findFacilityById(param.id));
@@ -32,7 +33,6 @@ export function EditFacility() {
                 setAccompaniedServices(await findAllAccompaniedService());
             };
             list();
-            console.log(facilityData?.typeRoom.toString())
         }, []
     )
     if (!facilityData) {

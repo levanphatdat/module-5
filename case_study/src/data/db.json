@@ -179,6 +179,26 @@
         3,
         4
       ]
+    },
+    {
+      "name": "VILLA ĐỈNH COUT",
+      "img": "https://furamavietnam.com/wp-content/uploads/2018/03/Presidential-Suite-F-370x239.jpg",
+      "typeRoom": 3,
+      "area": "123",
+      "price": "",
+      "amountOfPeople": "5",
+      "rentalType": 3,
+      "roomStandard": "",
+      "description": "",
+      "poolArea": "",
+      "floor": "",
+      "freeService": "xe du lịch",
+      "accompaniedService": [
+        2,
+        3,
+        4
+      ],
+      "id": 4
     }
   ],
   "rentalTypes": [
