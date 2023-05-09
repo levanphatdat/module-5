@@ -18,7 +18,7 @@ export function EditFacility() {
     const [typeRooms, setTypeRooms] = useState([]);
     const [accompaniedServices, setAccompaniedServices] = useState([])
     const param = useParams();
-    const [selectTypeRoom, setSelectTypeRoom] = useState(facilityData?.typeRoom.toString());
+    const [selectTypeRoom, setSelectTypeRoom] = useState(param.typeRoom.toString());
 
     useEffect(() => {
         const data = async () => {

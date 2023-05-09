@@ -32,7 +32,7 @@ root.render(
                 <Route path={'/createCustomer'} element={<CreateCustomer/>}/>
                 <Route path={'/createContract'} element={<CreateContract/>}/>
                 <Route path={'/editCustomer/:id'} element={<EditCustomer/>}/>
-                <Route path={'/editFacility/:id'} element={<EditFacility/>}/>
+                <Route path={'/editFacility/:id/:typeRoom'} element={<EditFacility/>}/>
             </Routes>
             <Footer/>
         </BrowserRouter>
