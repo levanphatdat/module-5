@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {Header} from "./components/home/header";
 import './link.css'
+import './search.css'
 import {Footer} from "./components/home/footer";
 import {Contract} from "./components/contract/contract";
 import {Route, Routes} from "react-router";
@@ -27,7 +28,6 @@ root.render(
                 <Route path={'/facility'} element={<Facility/>}/>
                 <Route path={'/customer'} element={<Customer/>}/>
                 <Route path={'/contract'} element={<Contract/>}/>
-                <Route path={'/facility'} element={<Facility/>}/>
                 <Route path={'/createFacility'} element={<CreateFacility/>}/>
                 <Route path={'/createCustomer'} element={<CreateCustomer/>}/>
                 <Route path={'/createContract'} element={<CreateContract/>}/>

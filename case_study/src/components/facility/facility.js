@@ -1,26 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {deleteFacility, findAllFacility, getFacility} from "../../service/facilityService";
+import {deleteFacility, findFacilityByName, getFacility} from "../../service/facilityService";
 import {Link} from "react-router-dom";
+import {Field, Form, Formik} from "formik";
 
 export function Facility() {
-    const [facilityList, setFacilityList] = useState([]);
     const [facilityDetail, setFacilityDetail] = useState();
+    const [list, setList] = useState([]);
+    const [facility, setFacility] = useState('');
 
-    useEffect(() => {
-        const listFacility = async () => {
-            setFacilityList(await findAllFacility())
-        }
-        listFacility()
-    }, [])
     const getData = async (id) => {
         const data = await getFacility(id);
         setFacilityDetail(data);
     };
     const handleDelete = async () => {
         await deleteFacility(facilityDetail.id);
-        setFacilityList(await findAllFacility())
+        setList(await findFacilityByName(facility))
         alert("Xoá thông tin dịch vụ thành công");
     };
+    useEffect(() => {
+        const find = async () => {
+            const response = await findFacilityByName(facility)
+            setList(response);
+        }
+        find()
+    }, [facility]);
     return (
         <div>
             <>
@@ -33,15 +36,45 @@ export function Facility() {
                     />
                     <div className="center">Dịch vụ</div>
                 </div>
-                <div className={"container"}>
-                    <Link to={'/createFacility'} className="btn btn-success mt-5">
+                <div className={"container d-flex justify-content-center"}>
+                    <Link to={'/createFacility'} className="btn btn-success mt-4">
                         Thêm mới dịch vụ
                     </Link>
                 </div>
+                <div className="row">
+                    <div>
+                        <Formik
+                            initialValues={{
+                                facility: ''
+                            }}
+                            onSubmit={(values) => {
+                                setFacility(values.facility);
+                            }}
+                        >
+                            <Form>
+                                <div className="input-group w-25 mt-3 float-end" >
+
+                                    <div className="form-outline">
+                                        <Field type="search" name={'facility'} id="form1" className="form-control"/>
+                                    </div>
+                                    <button type="submit" className="btn btn-primary  float-end">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </Form>
+                        </Formik>
+                    </div>
+                </div>
+
                 <div className="container mt-4">
                     <div className="row">
                         {
-                            facilityList.map((facility, index) => (
+                            list.length === 0 ? <h1 className={'text-danger text-center'}>Không tìm thấy kết quả</h1>:
+                            list.map((facility, index) => (
                                 <div key={index} className="col-4 mb-5">
                                     <div className="card" style={{width: "95%"}}>
                                         <img src={facility.img} alt=""/>
@@ -59,7 +92,8 @@ export function Facility() {
                                             >
                                                 Xoá
                                             </button>
-                                            <Link to={`/editFacility/${facility.id}/${facility.typeRoom}`} className="btn btn-primary float-end mx-3">
+                                            <Link to={`/editFacility/${facility.id}/${facility.typeRoom}`}
+                                                  className="btn btn-primary float-end mx-3">
                                                 Sửa
                                             </Link>
                                         </div>
@@ -71,7 +105,7 @@ export function Facility() {
                     <nav aria-label="Page navigation example">
                         <ul className="pagination justify-content-center">
                             <li className="page-item">
-                                <button className="page-link" >
+                                <button className="page-link">
                                     Previous
                                 </button>
                             </li>
@@ -81,12 +115,12 @@ export function Facility() {
                                 </button>
                             </li>
                             <li className="page-item">
-                                <button className="page-link" >
+                                <button className="page-link">
                                     2
                                 </button>
                             </li>
                             <li className="page-item">
-                                <button className="page-link" >
+                                <button className="page-link">
                                     3
                                 </button>
                             </li>

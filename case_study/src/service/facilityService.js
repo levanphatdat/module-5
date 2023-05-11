@@ -69,4 +69,11 @@ export const getFacility = async (id) => {
         console.log(error);
     }
 };
-
+export const findFacilityByName = async (name) => {
+    try {
+        const facility = await axios.get(`http://localhost:8080/facilities?name_like=${name}`);
+        return facility.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

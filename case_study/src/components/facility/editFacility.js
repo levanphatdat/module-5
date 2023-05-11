@@ -197,6 +197,7 @@ export function EditFacility() {
                                             onChange={(event) => (setSelectTypeRoom(event.target.value))}
                                             className="form-select"
                                             aria-label="Default select example"
+                                            value={param.typeRoom.toString()}
                                         >
                                             {
                                                 typeRooms.map((typeRoom, index) => (
