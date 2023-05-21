@@ -1,0 +1,24 @@
+{
+  "books": [
+    {
+      "id": 3,
+      "title": "Hihi",
+      "category": 2,
+      "author": "Dat"
+    }
+  ],
+  "category": [
+    {
+      "id": 1,
+      "name": "Life"
+    },
+    {
+      "id": 2,
+      "name": "Fun"
+    },
+    {
+      "id": 3,
+      "name": "Sad"
+    }
+  ]
+}
